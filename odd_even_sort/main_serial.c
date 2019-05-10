@@ -7,11 +7,12 @@
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
-        printf("Usage: program <size_of_array_to_be_sorted>\n");
+        printf("Usage: program <filename>\n");
         exit(1);
     }
-    int n = atoi(argv[1]);
-    int *rand_array1 = create_rand_array(n);
+    char *filename = argv[1];
+    int n = 0;
+    int *rand_array1 = read_rand_array_from_file(filename, &n);
     int *rand_array1_copy1 = create_array(n);
     copy_array(rand_array1, rand_array1_copy1, n);
     int *rand_array1_copy2 = create_array(n);
