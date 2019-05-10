@@ -5,6 +5,11 @@
 #include "serial_sort.h"
 #include "timer.h"
 
+/*
+    output:
+    <bubble_sort_time>
+    <odd_even_sort_time>
+*/
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         printf("Usage: program <filename>\n");
