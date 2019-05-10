@@ -2,6 +2,11 @@
 #include <stdlib.h>
 #include "util.h"
 
+/*
+    create file data.txt containing random numbers.
+    1 number per line.
+    first line is the size.
+*/
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         printf("Usage: program <size_of_array_to_be_sorted>\n");
@@ -11,6 +16,7 @@ int main(int argc, char *argv[]) {
     int *rand_array = create_rand_array(n);
     FILE *fp = NULL;
     fp = fopen("./data.txt", "w");
+    fprintf(fp, "%d\n", n);
     for (int i = 0; i < n; i++) {
         fprintf(fp, "%d\n", rand_array[i]);
     }
