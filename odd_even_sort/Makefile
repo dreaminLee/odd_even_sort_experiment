@@ -1,4 +1,4 @@
-CC=gcc
+CC=gcc -g
 
 UTIL_OBJ=util.o
 
@@ -6,11 +6,16 @@ SERIAL_SORT_OBJ=${UTIL_OBJ} serial_sort.o
 
 MAIN_SERIAL_OBJ=main_serial.o
 
-OUTPUT_FOLDER=../TEMP
+CREATE_DATA_OBJ=create_data.o
 
-all: main_serial
+OUTPUT_FOLDER=./output
+
+all: main_serial create_data
 
 main_serial: ${MAIN_SERIAL_OBJ} ${SERIAL_SORT_OBJ}
+	${CC} $^ -o ${OUTPUT_FOLDER}/$@
+
+create_data: ${CREATE_DATA_OBJ} ${UTIL_OBJ}
 	${CC} $^ -o ${OUTPUT_FOLDER}/$@
 
 *.o: *.c
