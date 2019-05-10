@@ -23,3 +23,5 @@ create_data: ${CREATE_DATA_OBJ} ${UTIL_OBJ}
 
 .PHONY clean:
 	rm *.o
+	rm ${OUTPUT_FOLDER}/*
+	

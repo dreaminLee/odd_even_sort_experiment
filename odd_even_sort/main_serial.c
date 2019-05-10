@@ -18,6 +18,10 @@ int main(int argc, char *argv[]) {
     char *filename = argv[1];
     int n = 0;
     int *rand_array1 = read_rand_array_from_file(filename, &n);
+    if (rand_array1 == NULL) {
+        printf("can't create random array from file %s\n", filename);
+        return 0;
+    }
     int *rand_array1_copy1 = create_array(n);
     copy_array(rand_array1, rand_array1_copy1, n);
     int *rand_array1_copy2 = create_array(n);
