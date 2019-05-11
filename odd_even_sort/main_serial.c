@@ -4,6 +4,7 @@
 #include "util.h"
 #include "serial_sort.h"
 #include "timer.h"
+//#define DEBUG 1
 
 /*
     output:
@@ -37,6 +38,10 @@ int main(int argc, char *argv[]) {
     odd_even_sort(rand_array1_copy2, n);
     GET_TIME(finish);
     printf("%f\n", finish - start);
+
+    #ifdef DEBUG
+    print_array(rand_array1_copy2, n);
+    #endif
 
     free(rand_array1);
     free(rand_array1_copy1);
