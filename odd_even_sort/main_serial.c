@@ -6,6 +6,10 @@
 #include "timer.h"
 //#define DEBUG 1
 
+int cmp(const void *a, const void *b) {
+    return (*((int *)a) - *((int *)b));
+}
+
 /*
     output:
     <bubble_sort_time>
@@ -27,6 +31,8 @@ int main(int argc, char *argv[]) {
     copy_array(rand_array1, rand_array1_copy1, n);
     int *rand_array1_copy2 = create_array(n);
     copy_array(rand_array1, rand_array1_copy2, n);
+    int *rand_array1_copy3 = create_array(n);
+    copy_array(rand_array1, rand_array1_copy3, n);
 
     double start, finish;
     GET_TIME(start);
@@ -39,6 +45,11 @@ int main(int argc, char *argv[]) {
     GET_TIME(finish);
     printf("%f\n", finish - start);
 
+    GET_TIME(start);
+    qsort(rand_array1_copy3, n, sizeof(int), cmp);
+    GET_TIME(finish);
+    printf("%f\n", finish - start);
+
     #ifdef DEBUG
     print_array(rand_array1_copy2, n);
     #endif
@@ -46,5 +57,6 @@ int main(int argc, char *argv[]) {
     free(rand_array1);
     free(rand_array1_copy1);
     free(rand_array1_copy2);
+    free(rand_array1_copy3);
     return 0;
 }
