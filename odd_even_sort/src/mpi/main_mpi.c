@@ -47,6 +47,8 @@ void parallel_sort(int *array, int n, int rank, int comm_size) {
     MPI_Gather(local_sub_array, local_sub_n, MPI_INT,
                array, local_sub_n, MPI_INT,
                0, MPI_COMM_WORLD);
+    free(recv_temp);
+    free(merge_temp);
 }
 
 int main(int argc, char *argv[]) {

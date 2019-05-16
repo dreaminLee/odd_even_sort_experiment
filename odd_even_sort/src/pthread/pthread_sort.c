@@ -19,7 +19,7 @@ int max_pair_in_array = 0;
 // variables for function barrier
 pthread_mutex_t mutex_phase_sync;
 pthread_cond_t cond_var_phase_sync;
-int thread_counter;
+int thread_counter = 0;
 
 void barrier();
 void *sort_internal(void *thread_no);
@@ -46,10 +46,11 @@ void odd_even_sort_pthread() {
     // init conditional variable and mutex for sync
     pthread_mutex_init(&mutex_phase_sync, NULL);
     pthread_cond_init(&cond_var_phase_sync, NULL);
+    thread_counter = 0;
 
     pthread_t *thread_handles = malloc(sizeof(pthread_t) * thread_count);
     for (long thread_no = 0; thread_no < thread_count; thread_no++) {
-        pthread_create(&thread_handles[thread_no], NULL, sort_internal, (void *)thread_no);
+        pthread_create(&thread_handles[thread_no], NULL, sort_internal_qsort, (void *)thread_no);
     }
     for (long thread_no = 0; thread_no < thread_count; thread_no++) {
         pthread_join(thread_handles[thread_no], NULL);
@@ -97,17 +98,31 @@ void *sort_internal(void *thread_no) {
     }
 }
 
+// assume thread_count can divide size of array exactly
 void *sort_internal_qsort(void *thread_no) {
     int local_rank = (long)thread_no;
     int local_num_keys = array_to_sort_sz / thread_count;
-    if ((array_to_sort_sz % 2 != 0) &&
-        (local_rank == thread_count - 1)) {
-        local_num_keys = array_to_sort_sz - (local_num_keys * (thread_count - 1));
-    }
-    int *local_addr = array_to_sort + local_rank * (array_to_sort_sz / thread_count);
+    int *local_addr = array_to_sort + local_rank * local_num_keys;
 
     qsort(local_addr, local_num_keys, sizeof(int), cmp);
+    barrier();
+    int *partner_keys = malloc(sizeof(int) * local_num_keys);
+    int *temp = malloc(sizeof(int) * local_num_keys);
     for (int phase = 0; phase < thread_count; phase++) {
         int partner = compute_partner(phase, local_rank, thread_count);
+        if (partner != -1) {
+            copy_array(array_to_sort + partner * local_num_keys, partner_keys, local_num_keys);
+            barrier();
+            if (local_rank < partner) {
+                merge_low(local_addr, partner_keys, temp, local_num_keys);
+            } else {
+                merge_high(local_addr, partner_keys, temp, local_num_keys);
+            }
+        } else {
+            barrier();
+        }
+        barrier();
     }
+    free(partner_keys);
+    free(temp);
 }

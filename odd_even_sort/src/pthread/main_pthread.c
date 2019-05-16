@@ -20,7 +20,6 @@ int main(int argc, char *argv[]) {
         return 0;
     }
     #ifdef DEBUG
-    print_array(rand_array, rand_array_sz);
     int *rand_array_copy = create_array(rand_array_sz);
     copy_array(rand_array, rand_array_copy, rand_array_sz);
     #endif
@@ -32,7 +31,6 @@ int main(int argc, char *argv[]) {
     GET_TIME(finish);
     printf("%f\n", finish - start);
     #ifdef DEBUG
-    print_array(rand_array, rand_array_sz);
     qsort(rand_array_copy, rand_array_sz, sizeof(int), cmp);
     printf("%d\n", compare_array(rand_array, rand_array_copy, rand_array_sz));
     #endif
