@@ -47,26 +47,32 @@ int main(int argc, char *argv[]) {
 }
 
 void odd_even_sort_openmp(int *array, int n) {
-    int tmp, i, phase;
+    int i, phase;
 #   pragma omp parallel num_threads(thread_count) \
-    default(none) shared(array, n) private(i, phase, tmp)
+    default(none) shared(array, n) private(i, phase)
     for (phase = 0; phase < n; phase++) {
         if (phase % 2 == 0) {
-#           pragma omp for
+#           pragma omp for schedule(runtime)
             for (i = 1; i < n; i += 2) {
                 if (array[i-1] > array[i]) {
+                    /*
                     tmp = array[i-1];
                     array[i-1] = array[i];
                     array[i] = tmp;
+                    */
+                   SWAP(array[i-1], array[i]);
                 }
             }
         } else {
-#           pragma omp for
+#           pragma omp for schedule(runtime)
             for (i = 1; i < n-1; i += 2) {
                 if (array[i] > array[i+1]) {
+                    /*
                     tmp = array[i+1];
                     array[i+1] = array[i];
                     array[i] = tmp;
+                    */
+                   SWAP(array[i+1], array[i]);
                 }
             }
         }
