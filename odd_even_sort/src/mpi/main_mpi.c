@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "util.h"
+#include "../util/util.h"
 //#define DEBUG 1
 
 int cmp(const void *a, const void *b) {
