@@ -61,3 +61,16 @@ int *read_rand_array_from_file(const char *filename, int *size) {
     fclose(fp);
     return array;
 }
+
+int compare_array(const int *array_a, const int *array_b, int array_sz) {
+    for (int i = 0; i < array_sz; i++) {
+        if (array_a[i] != array_b[i]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int cmp(const void *a, const void *b) {
+    return (*((int *)a) - *((int *)b));
+}

@@ -5,10 +5,6 @@
 #include "../util/util.h"
 //#define DEBUG 1
 
-int cmp(const void *a, const void *b) {
-    return (*((int *)a) - *((int *)b));
-}
-
 int compute_partner(int phase, int rank, int comm_size) {
     int partner;
     if (phase % 2 == 0) { // Even phase

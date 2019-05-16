@@ -1,4 +1,7 @@
+#include <stdlib.h>
 #include "../util/util.h"
+
+int cmp(const void *a, const void *b);
 
 void bubble_sort(int *array, int n) {
     for (int i = 0; i < n - 1; i++) {
@@ -26,4 +29,8 @@ void odd_even_sort(int *array, int n) {
             }
         }
     }
+}
+
+void quick_sort(int *array, int array_sz) {
+    qsort(array, array_sz, sizeof(int), cmp);
 }

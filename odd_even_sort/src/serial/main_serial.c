@@ -1,14 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "../util/util.h"
 #include "../util/timer.h"
 #include "serial_sort.h"
-//#define DEBUG 1
-
-int cmp(const void *a, const void *b) {
-    return (*((int *)a) - *((int *)b));
-}
+//#define DEBUG
 
 /*
     output:
@@ -46,7 +41,7 @@ int main(int argc, char *argv[]) {
     printf("%f\n", finish - start);
 
     GET_TIME(start);
-    qsort(rand_array1_copy3, n, sizeof(int), cmp);
+    quick_sort(rand_array1_copy3, n);
     GET_TIME(finish);
     printf("%f\n", finish - start);
 
