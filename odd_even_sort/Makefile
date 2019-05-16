@@ -38,7 +38,7 @@ create_data: ${CREATE_DATA_OBJ} ${UTIL_OBJ}
 	${CC} $^ -c -o $@
 
 ${MAIN_MPI_FILE}.o: ${MAIN_MPI_FILE}.c
-	${MPICC} $^ -c
+	${MPICC} $^ -c -o $@
 
 .PHONY clean:
 	rm ${SRC_FOLDER}/*/*.o

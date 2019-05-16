@@ -1,7 +1,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "util.h"
+#include "../util/util.h"
 
 #define COMPUTE_MAX_THREAD_COUNT(array_sz) \
     ((array_sz % 2 == 0) ? \

@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "util.h"
+#include "../util/util.h"
+#include "../util/timer.h"
 #include "serial_sort.h"
-#include "timer.h"
 //#define DEBUG 1
 
 int cmp(const void *a, const void *b) {

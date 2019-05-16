@@ -1,9 +1,9 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "../util/util.h"
+#include "../util/timer.h"
 #include "pthread_sort.h"
-#include "util.h"
-#include "timer.h"
 
 int main(int argc, char *argv[]) {
     if (argc != 3) {
