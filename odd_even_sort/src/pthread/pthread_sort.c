@@ -42,6 +42,8 @@ void set_array_to_sort(int *array, int array_sz) {
     thread_count = thread_count > max_thread_count ? max_thread_count : thread_count;
 }
 
+// before calling this sort function
+// call set_thread_count and set_array_to_sort to set arguments
 void odd_even_sort_pthread() {
     // init conditional variable and mutex for sync
     pthread_mutex_init(&mutex_phase_sync, NULL);
@@ -61,6 +63,8 @@ void odd_even_sort_pthread() {
     pthread_mutex_destroy(&mutex_phase_sync);
 }
 
+// barrier for all threads created, 
+// so it must be called by every thread otherwise the program might be deadlocked
 void barrier() {
     pthread_mutex_lock(&mutex_phase_sync);
     thread_counter++;

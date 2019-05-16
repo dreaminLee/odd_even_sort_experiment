@@ -9,6 +9,7 @@
     output:
     <bubble_sort_time>
     <odd_even_sort_time>
+    <quick_sort_time>
 */
 int main(int argc, char *argv[]) {
     if (argc != 2) {

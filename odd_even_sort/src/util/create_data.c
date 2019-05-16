@@ -4,8 +4,9 @@
 
 /*
     create file data.txt containing random numbers.
+    outputs a file "data.txt" containing randomly generated integers
     1 number per line.
-    first line is the size.
+    first line is the number of integers.
 */
 int main(int argc, char *argv[]) {
     if (argc != 2) {

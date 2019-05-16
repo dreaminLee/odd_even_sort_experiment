@@ -55,11 +55,6 @@ void odd_even_sort_openmp(int *array, int n) {
 #           pragma omp for schedule(runtime)
             for (i = 1; i < n; i += 2) {
                 if (array[i-1] > array[i]) {
-                    /*
-                    tmp = array[i-1];
-                    array[i-1] = array[i];
-                    array[i] = tmp;
-                    */
                    SWAP(array[i-1], array[i]);
                 }
             }
@@ -67,11 +62,6 @@ void odd_even_sort_openmp(int *array, int n) {
 #           pragma omp for schedule(runtime)
             for (i = 1; i < n-1; i += 2) {
                 if (array[i] > array[i+1]) {
-                    /*
-                    tmp = array[i+1];
-                    array[i+1] = array[i];
-                    array[i] = tmp;
-                    */
                    SWAP(array[i+1], array[i]);
                 }
             }

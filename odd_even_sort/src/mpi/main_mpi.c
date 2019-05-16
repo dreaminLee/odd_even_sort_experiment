@@ -51,6 +51,10 @@ void parallel_sort(int *array, int n, int rank, int comm_size) {
     free(merge_temp);
 }
 
+/*
+    output:
+    <mpi_sort_time>
+*/
 int main(int argc, char *argv[]) {
     MPI_Init(&argc, &argv);
     int comm_size, local_rank;

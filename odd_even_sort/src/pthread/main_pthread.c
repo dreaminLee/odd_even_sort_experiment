@@ -6,6 +6,10 @@
 #include "pthread_sort.h"
 //#define DEBUG
 
+/*
+    output:
+    <pthread_sort_time>
+*/
 int main(int argc, char *argv[]) {
     if (argc != 3) {
         printf("Usage: program <number_of_threads> <filename>\n");
