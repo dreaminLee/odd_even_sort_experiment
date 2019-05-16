@@ -9,18 +9,29 @@
         ((array_sz - 1) / 2))
 #define COMPUTE_MAX_PAIR_IN_ARRAY(array_sz) COMPUTE_MAX_THREAD_COUNT(array_sz)
 
+// arguments for sort
 int thread_count = 0;
 int *array_to_sort = NULL;
 int array_to_sort_sz = 0;
+// sort_internal
 int max_pair_in_array = 0;
 
+// variables for function barrier
 pthread_mutex_t mutex_phase_sync;
 pthread_cond_t cond_var_phase_sync;
+int thread_counter;
 
+void barrier();
 void *sort_internal(void *thread_no);
+void *sort_internal_qsort(void *thread_no);
 
-void set_thread_count(int thread_count) {
-    thread_count = thread_count;
+void set_thread_count(int count) {
+    if (array_to_sort_sz == 0) {
+        thread_count = count;
+    } else {
+        int max_thread_count = COMPUTE_MAX_THREAD_COUNT(array_to_sort_sz);
+        thread_count = count > max_thread_count ? max_thread_count : count;
+    }
 }
 
 void set_array_to_sort(int *array, int array_sz) {
@@ -49,16 +60,26 @@ void odd_even_sort_pthread() {
     pthread_mutex_destroy(&mutex_phase_sync);
 }
 
+void barrier() {
+    pthread_mutex_lock(&mutex_phase_sync);
+    thread_counter++;
+    if (thread_counter == thread_count) {
+        thread_counter = 0;
+        pthread_cond_broadcast(&cond_var_phase_sync);
+    } else {
+        while (pthread_cond_wait(&cond_var_phase_sync, &mutex_phase_sync) != 0);
+    }
+    pthread_mutex_unlock(&mutex_phase_sync);
+}
+
 void *sort_internal(void *thread_no) {
     int local_rank = (long)thread_no;
-    int local_num_pairs;
+    int local_num_pairs = max_pair_in_array / thread_count;
     if ((max_pair_in_array % thread_count != 0) && 
         (local_rank == thread_count - 1)) {
-            local_num_pairs = max_pair_in_array % thread_count;
-    } else {
-        local_num_pairs = max_pair_in_array / thread_count;
+            local_num_pairs = max_pair_in_array - (local_num_pairs * (thread_count - 1));
     }
-    int *local_addr = array_to_sort + local_rank * local_num_pairs * 2;
+    int *local_addr = array_to_sort + local_rank * (max_pair_in_array / thread_count) * 2;
     
     // sort start
     for (int phase = 0; phase < array_to_sort_sz; phase++) {
@@ -72,6 +93,21 @@ void *sort_internal(void *thread_no) {
             cur_addr += 2;
         }
         // sync: wait for other threads to finish
+        barrier();
+    }
+}
 
+void *sort_internal_qsort(void *thread_no) {
+    int local_rank = (long)thread_no;
+    int local_num_keys = array_to_sort_sz / thread_count;
+    if ((array_to_sort_sz % 2 != 0) &&
+        (local_rank == thread_count - 1)) {
+        local_num_keys = array_to_sort_sz - (local_num_keys * (thread_count - 1));
+    }
+    int *local_addr = array_to_sort + local_rank * (array_to_sort_sz / thread_count);
+
+    qsort(local_addr, local_num_keys, sizeof(int), cmp);
+    for (int phase = 0; phase < thread_count; phase++) {
+        int partner = compute_partner(phase, local_rank, thread_count);
     }
 }

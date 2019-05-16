@@ -4,6 +4,7 @@
 #include "../util/util.h"
 #include "../util/timer.h"
 #include "pthread_sort.h"
+//#define DEBUG
 
 int main(int argc, char *argv[]) {
     if (argc != 3) {
@@ -20,6 +21,8 @@ int main(int argc, char *argv[]) {
     }
     #ifdef DEBUG
     print_array(rand_array, rand_array_sz);
+    int *rand_array_copy = create_array(rand_array_sz);
+    copy_array(rand_array, rand_array_copy, rand_array_sz);
     #endif
     set_array_to_sort(rand_array, rand_array_sz);
 
@@ -28,6 +31,11 @@ int main(int argc, char *argv[]) {
     odd_even_sort_pthread();
     GET_TIME(finish);
     printf("%f\n", finish - start);
+    #ifdef DEBUG
+    print_array(rand_array, rand_array_sz);
+    qsort(rand_array_copy, rand_array_sz, sizeof(int), cmp);
+    printf("%d\n", compare_array(rand_array, rand_array_copy, rand_array_sz));
+    #endif
 
     return 0;
 }
