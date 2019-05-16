@@ -7,3 +7,5 @@ int *read_rand_array_from_file(const char filename[], int *size);
 int compare_array(const int *array_a, const int *array_b, int array_sz);
 int cmp(const void *a, const void *b);
 int compute_partner(int phase, int rank, int comm_size);
+void merge_low(int *local_keys, const int *recv_keys, int *temp_keys, int size);
+void merge_high(int *local_keys, const int *recv_keys, int *temp_keys, int size);

@@ -5,42 +5,6 @@
 #include "../util/util.h"
 //#define DEBUG 1
 
-void merge_low(int *local_keys, const int *recv_keys, int *temp_keys, int n) {
-    int m_i, r_i, t_i;
-    m_i = r_i = t_i = 0;
-
-    while (t_i < n) {
-        if (local_keys[m_i] <= recv_keys[r_i]) {
-            temp_keys[t_i] = local_keys[m_i];
-            m_i++;
-        } else {
-            temp_keys[t_i] = recv_keys[r_i];
-            r_i++;
-        }
-        t_i++;
-    }
-
-    memcpy(local_keys, temp_keys, sizeof(int) * n);
-}
-
-void merge_high(int *local_keys, const int *recv_keys, int *temp_keys, int n) {
-    int m_i, r_i, t_i;
-    m_i = r_i = t_i = n - 1;
-
-    while (t_i >= 0) {
-        if (local_keys[m_i] >= recv_keys[r_i]) {
-            temp_keys[t_i] = local_keys[m_i];
-            m_i--;
-        } else {
-            temp_keys[t_i] = recv_keys[r_i];
-            r_i--;
-        }
-        t_i--;
-    }
-
-    memcpy(local_keys, temp_keys, sizeof(int) * n);
-}
-
 /*
     array: array to be sorted, NULL in processes other than process 0
     n: size of array
