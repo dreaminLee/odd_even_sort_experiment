@@ -6,3 +6,4 @@ void swap(int *a, int *b);
 int *read_rand_array_from_file(const char filename[], int *size);
 int compare_array(const int *array_a, const int *array_b, int array_sz);
 int cmp(const void *a, const void *b);
+int compute_partner(int phase, int rank, int comm_size);

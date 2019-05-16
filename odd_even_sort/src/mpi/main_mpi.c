@@ -5,27 +5,6 @@
 #include "../util/util.h"
 //#define DEBUG 1
 
-int compute_partner(int phase, int rank, int comm_size) {
-    int partner;
-    if (phase % 2 == 0) { // Even phase
-        if (rank % 2 != 0) { // Odd rank
-            partner = rank - 1;
-        } else {            // Even rank
-            partner = rank + 1;
-        }
-    } else {             // Odd phase
-        if (rank % 2 != 0) { // Odd rank
-            partner = rank + 1;
-        } else {            // Even rank
-            partner = rank - 1;
-        }
-    }
-    if (partner == -1 || partner == comm_size) {
-        partner = MPI_PROC_NULL;
-    }
-    return partner;
-}
-
 void merge_low(int *local_keys, const int *recv_keys, int *temp_keys, int n) {
     int m_i, r_i, t_i;
     m_i = r_i = t_i = 0;

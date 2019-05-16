@@ -74,3 +74,24 @@ int compare_array(const int *array_a, const int *array_b, int array_sz) {
 int cmp(const void *a, const void *b) {
     return (*((int *)a) - *((int *)b));
 }
+
+int compute_partner(int phase, int rank, int comm_size) {
+    int partner;
+    if (phase % 2 == 0) { // Even phase
+        if (rank % 2 != 0) { // Odd rank
+            partner = rank - 1;
+        } else {            // Even rank
+            partner = rank + 1;
+        }
+    } else {             // Odd phase
+        if (rank % 2 != 0) { // Odd rank
+            partner = rank + 1;
+        } else {            // Even rank
+            partner = rank - 1;
+        }
+    }
+    if (partner == -1 || partner == comm_size) {
+        partner = -1;
+    }
+    return partner;
+}
