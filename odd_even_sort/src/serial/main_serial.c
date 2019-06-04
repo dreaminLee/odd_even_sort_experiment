@@ -31,10 +31,12 @@ int main(int argc, char *argv[]) {
     copy_array(rand_array1, rand_array1_copy3, n);
 
     double start, finish;
+    /*
     GET_TIME(start);
     bubble_sort(rand_array1_copy1, n);
     GET_TIME(finish);
     printf("%f\n", finish - start);
+    */
 
     GET_TIME(start);
     odd_even_sort(rand_array1_copy2, n);
