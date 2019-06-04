@@ -6,10 +6,7 @@
 //#define DEBUG
 
 /*
-    output:
-    <bubble_sort_time>
-    <odd_even_sort_time>
-    <quick_sort_time>
+    output: <odd_even_sort_time>
 */
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -23,12 +20,14 @@ int main(int argc, char *argv[]) {
         printf("can't create random array from file %s\n", filename);
         return 0;
     }
+    /*
     int *rand_array1_copy1 = create_array(n);
     copy_array(rand_array1, rand_array1_copy1, n);
     int *rand_array1_copy2 = create_array(n);
     copy_array(rand_array1, rand_array1_copy2, n);
     int *rand_array1_copy3 = create_array(n);
     copy_array(rand_array1, rand_array1_copy3, n);
+    */
 
     double start, finish;
     /*
@@ -39,22 +38,26 @@ int main(int argc, char *argv[]) {
     */
 
     GET_TIME(start);
-    odd_even_sort(rand_array1_copy2, n);
+    odd_even_sort(rand_array1, n);
     GET_TIME(finish);
     printf("%f\n", finish - start);
 
+    /*
     GET_TIME(start);
     quick_sort(rand_array1_copy3, n);
     GET_TIME(finish);
     printf("%f\n", finish - start);
+    */
 
     #ifdef DEBUG
     print_array(rand_array1_copy2, n);
     #endif
 
     free(rand_array1);
+    /*
     free(rand_array1_copy1);
     free(rand_array1_copy2);
     free(rand_array1_copy3);
+    */
     return 0;
 }
