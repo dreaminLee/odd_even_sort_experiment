@@ -1,5 +1,6 @@
 import os
 import decimal
+import numpy
 
 output_folder = "../output/"
 exec_create_data = "create_data"
@@ -18,8 +19,7 @@ def get_exec_time(command):
     times = []
     for i in range(num_of_exec):
         times.append(decimal.Decimal(os.popen(command).read().strip()))
-    times.sort()
-    return times[int((num_of_exec - 1) / 2)] if num_of_exec % 2 == 1 else (times[int(num_of_exec / 2)] + times[int(num_of_exec / 2 - 1)]) / 2
+    return numpy.mean(times)
 
 def get_serial_odd_even_sort_exec_time():
     return get_exec_time(add_output_folder(exec_serial) + " " + add_output_folder(input_data) + " 1")
