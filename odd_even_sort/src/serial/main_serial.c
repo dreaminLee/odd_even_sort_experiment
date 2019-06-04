@@ -9,11 +9,17 @@
     output: <odd_even_sort_time>
 */
 int main(int argc, char *argv[]) {
-    if (argc != 2) {
-        printf("Usage: program <filename>\n");
+    if (argc != 3) {
+        printf("Usage: program <filename> <1 for serial odd even sort, 2 for serial qsort>\n");
         exit(1);
     }
     char *filename = argv[1];
+    int mode = atoi(argv[2]);
+    if (!(mode == 1 || mode == 2)) {
+        printf("Usage: program <filename> <1 for serial odd even sort, 2 for serial qsort>\n");
+        printf("%d\n", mode);
+        exit(1);
+    }
     int n = 0;
     int *rand_array1 = read_rand_array_from_file(filename, &n);
     if (rand_array1 == NULL) {
@@ -37,17 +43,17 @@ int main(int argc, char *argv[]) {
     printf("%f\n", finish - start);
     */
 
-    GET_TIME(start);
-    odd_even_sort(rand_array1, n);
-    GET_TIME(finish);
-    printf("%f\n", finish - start);
-
-    /*
-    GET_TIME(start);
-    quick_sort(rand_array1_copy3, n);
-    GET_TIME(finish);
-    printf("%f\n", finish - start);
-    */
+    if (mode == 1) {
+        GET_TIME(start);
+        odd_even_sort(rand_array1, n);
+        GET_TIME(finish);
+        printf("%f\n", finish - start);
+    } else if (mode == 2) {
+        GET_TIME(start);
+        quick_sort(rand_array1, n);
+        GET_TIME(finish);
+        printf("%f\n", finish - start);
+    }
 
     #ifdef DEBUG
     print_array(rand_array1_copy2, n);
