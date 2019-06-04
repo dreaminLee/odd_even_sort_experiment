@@ -9,7 +9,7 @@ exec_pthread = "main_pthread"
 exec_openmp = "main_openmp"
 input_data = "data.txt"
 
-num_of_exec = 2
+num_of_exec = 10
 
 def add_output_folder(filename):
     return output_folder + filename
@@ -39,9 +39,9 @@ def get_pthreads_exec_time(thread_num):
 def get_openmp_exec_time(thread_num):
     return get_exec_time(add_output_folder(exec_openmp) + " " + str(thread_num) + " " + add_output_folder(input_data))
 
-data_size = 1000
-data_incr_step = 1000
-max_data_size = 10000
+data_size = 10000
+data_incr_step = 10000
+max_data_size = 100000
 
 # using this list to customize the number of processes/threads when running parallel programs.
 proc_nums = [2, 4, 8]
@@ -82,6 +82,7 @@ while data_size <= max_data_size:
         exec_times[2 + len(proc_nums) + i].append(pthreads_exec_time)
         exec_times[2 + 2*len(proc_nums) + i].append(openmp_exec_time)
 
+    print("finished data size " + str(data_size))
     data_size += data_incr_step
 
 for i in exec_times:
