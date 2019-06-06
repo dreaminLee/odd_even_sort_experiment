@@ -103,16 +103,19 @@ while data_size <= max_data_size:
     for i in range(len(proc_nums)):
         if run_mpi:
             mpi_exec_time = get_mpi_exec_time(proc_nums[i])
-            exec_times[(run_serial_odd_even + run_serial_qsort) +
+            exec_times[(run_serial_odd_even +
+                        run_serial_qsort) +
                        i].append(mpi_exec_time)
         if run_pthreads:
             pthreads_exec_time = get_pthreads_exec_time(proc_nums[i])
-            exec_times[(run_serial_odd_even + run_serial_qsort) +
+            exec_times[(run_serial_odd_even +
+                        run_serial_qsort) +
                        run_mpi*len(proc_nums) + i].append(pthreads_exec_time)
         if run_openmp:
             openmp_exec_time = get_openmp_exec_time(proc_nums[i])
-            exec_times[(run_serial_odd_even + run_serial_qsort) + (run_mpi +
-                                                                   run_pthreads)*len(proc_nums) + i].append(openmp_exec_time)
+            exec_times[(run_serial_odd_even +
+                        run_serial_qsort) +
+                       (run_mpi + run_pthreads)*len(proc_nums) + i].append(openmp_exec_time)
 
     print("finished data size " + str(data_size))
     data_size += data_incr_step
