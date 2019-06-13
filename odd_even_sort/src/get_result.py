@@ -41,7 +41,7 @@ def get_exec_time(command):
     times = []
     for i in range(num_of_exec):
         times.append(decimal.Decimal(os.popen(command).read().strip()))
-    return numpy.mean(times)
+    return numpy.min(times)
 
 
 def get_serial_odd_even_sort_exec_time():
