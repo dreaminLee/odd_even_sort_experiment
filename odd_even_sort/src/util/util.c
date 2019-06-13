@@ -4,7 +4,7 @@
 #include <string.h>
 
 #define RAND_MAX_NUMBER 1000000
-#define RAND_MAX_NUMBER_LEN 7
+#define RAND_MAX_NUMBER_LEN 10
 
 /*
     range: 0~RAND_MAX_NUMBER
